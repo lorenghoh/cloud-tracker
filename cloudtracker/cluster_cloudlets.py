@@ -348,7 +348,8 @@ def save_clusters(clusters, t):
         # TODO: Parallelize 
         for id, clust in clusters.iteritems():
             grp = f.create_group(str(id))
-
+            data=numpy.unique(clust.past_connections)
+            print('type of data: ',data.dtype,type(clust.past_connections))
             grp.create_dataset('past_connections', data=numpy.unique(clust.past_connections))
             grp.create_dataset('merge_connections', data=numpy.unique(clust.merge_connections))
             grp.create_dataset('split_connections', data=numpy.unique(clust.split_connections))

@@ -62,22 +62,22 @@ def main(MC, save_all=True):
     if not os.path.exists('hdf5'):
         os.mkdir('hdf5')
 
-    # TODO: Parallelize file access (multiprocessing) 
-    for n, filename in enumerate(filelist):
-        print("generate cloudlets; time step: %d" % n)
-        core, condensed, plume, u, v, w = load_data(filename)
+    # # TODO: Parallelize file access (multiprocessing) 
+    # for n, filename in enumerate(filelist):
+    #     print("generate cloudlets; time step: %d" % n)
+    #     core, condensed, plume, u, v, w = load_data(filename)
 
-        cloudlets = generate_cloudlets(core, condensed, plume, u, v, w, MC)
+    #     cloudlets = generate_cloudlets(core, condensed, plume, u, v, w, MC)
         
-        # TEST: linear calls instead of for lodop to speed this up?
-        with h5py.File('hdf5/cloudlets_%08g.h5' % n, "w") as f:
-            for i in range(len(cloudlets)):
-                grp = f.create_group(str(i))
-                for var in cloudlet_items:
-                    if(var in ['core', 'condensed', 'plume']):
-                        dset = grp.create_dataset(var, data=cloudlets[i][var][...])
-                    else:
-                        deset = grp.create_dataset(var, data=cloudlets[i][var])
+    #     # TEST: linear calls instead of for lodop to speed this up?
+    #     with h5py.File('hdf5/cloudlets_%08g.h5' % n, "w") as f:
+    #         for i in range(len(cloudlets)):
+    #             grp = f.create_group(str(i))
+    #             for var in cloudlet_items:
+    #                 if(var in ['core', 'condensed', 'plume']):
+    #                     dset = grp.create_dataset(var, data=cloudlets[i][var][...])
+    #                 else:
+    #                     deset = grp.create_dataset(var, data=cloudlets[i][var])
     
 #----cluster----
 
